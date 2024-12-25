@@ -1,1 +1,20 @@
-".venv/" 
+# Ignore virtual environments
+.venv/
+
+# Python bytecode files
+*.pyc
+__pycache__/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+
+# MacOS-specific files
+.DS_Store
+
+# VSCode-specific files
+.vscode/
+
+# Environment variables file
+.env
