@@ -1,0 +1,9 @@
+<!-- templates/menu_pricing/error.html -->
+{% extends 'menu_pricing/base.html' %}
+
+{% block title %}Error{% endblock %}
+
+{% block content %}
+    <h2 class="text-2xl text-red-500">Error occurred!</h2>
+    <p>{{ error_type }}: {{ error }}</p>
+{% endblock %}

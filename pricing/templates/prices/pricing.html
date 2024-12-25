@@ -1,0 +1,41 @@
+<!-- prices/pricing.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final Pricing</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { text-align: center; }
+        table { width: 60%; margin: 0 auto; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+        th { background-color: #0078D7; color: white; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+    </style>
+</head>
+<body>
+    <h1>Final Dynamic Prices</h1>
+
+    <h2>Weather Data</h2>
+    <p><strong>Temperature:</strong> {{ weather_data.temperature }} °F</p>
+    <p><strong>Rain Chance:</strong> {{ weather_data.rain_chance }}%</p>
+
+    <h2>Dynamic Prices</h2>
+    <table>
+        <tr>
+            <th>Item</th>
+            <th>Base Price ($)</th>
+            <th>Final Price ($)</th>
+        </tr>
+        {% for item, base_price in menu_items.items %}
+        <tr>
+            <td>{{ item }}</td>
+            <td>{{ base_price }}</td>
+            <td>{{ final_prices|get_item:item }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

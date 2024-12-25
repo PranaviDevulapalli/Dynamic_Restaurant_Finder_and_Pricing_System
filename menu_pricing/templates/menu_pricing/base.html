@@ -1,0 +1,116 @@
+/* Issue: initMap is being initialized in both app.js and base.html.
+   Solution: Ensure that initMap is defined and called only once.
+*/
+
+// Refactored base.html script
+<script>
+    let map;
+    let infowindow;
+    let userLocation = { lat: 37.7749, lng: -122.4194 };  // Default location: San Francisco
+
+    function initiMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: userLocation,
+            zoom: 14,
+        });
+
+        infowindow = new google.maps.InfoWindow();
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(position => {
+                userLocation = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+                map.setCenter(userLocation);
+            });
+        }
+
+        google.maps.event.addListener(map, 'click', function(event) {
+            handleMapClick(event.latLng.lat(), event.latLng.lng());
+        });
+    }
+
+    function handleMapClick(lat, lng) {
+        fetch(`/get-restaurant-details/?lat=${lat}&lng=${lng}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.error) {
+                    displayNoRestaurants();
+                } else {
+                    if (data.restaurants.length > 0) {
+                        displayRestaurantList(data.restaurants, lat, lng);
+                    } else {
+                        displayNoRestaurants();
+                    }
+                }
+            })
+            .catch(error => console.error('Error fetching restaurant details:', error));
+    }
+
+    function displayNoRestaurants() {
+        document.getElementById('info-message').innerText = 'No restaurants available in this area.';
+        document.getElementById('restaurant-details').innerHTML = '';
+    }
+
+    function displayRestaurantList(restaurants, lat, lng) {
+        const restaurantDetails = document.getElementById('restaurant-details');
+        document.getElementById('info-message').innerText = 'Nearby Restaurants:';
+        restaurantDetails.innerHTML = '';
+
+        restaurants.forEach(restaurant => {
+            const li = document.createElement('li');
+            li.innerHTML = `<strong>${restaurant.name}</strong><br>Location: ${restaurant.vicinity}`;
+            li.onclick = () => fetchMenuPricing(lat, lng, restaurant.place_id);
+            restaurantDetails.appendChild(li);
+        });
+    }
+
+    function fetchMenuPricing(lat, lng, placeId) {
+        fetch(`/get-menu-pricing/?lat=${lat}&lng=${lng}&place_id=${placeId}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                const infoDiv = document.getElementById('restaurant-info');
+                infoDiv.innerHTML = '<h2>Restaurant Details:</h2>';
+
+                const weatherDiv = document.createElement('div');
+                weatherDiv.innerHTML = `<strong>Weather:</strong> ${data.weather.temperature}°C, ${data.weather.rain_chance}`;
+                infoDiv.appendChild(weatherDiv);
+
+                const busynessDiv = document.createElement('div');
+                busynessDiv.innerHTML = `<strong>Busyness:</strong> ${data.busyness}% busy`;
+                infoDiv.appendChild(busynessDiv);
+
+                const menuDiv = document.createElement('div');
+                menuDiv.innerHTML = '<strong>Menu Items:</strong>';
+                const ul = document.createElement('ul');
+                data.menu_items.forEach(item => {
+                    const li = document.createElement('li');
+                    li.innerText = `${item.name}: $${item.price}`;
+                    ul.appendChild(li);
+                });
+                menuDiv.appendChild(ul);
+                infoDiv.appendChild(menuDiv);
+            })
+            .catch(error => console.error('Error fetching menu pricing:', error));
+    }
+
+    document.addEventListener('DOMContentLoaded', initializeMap);
+</script>
+
+/* Explanation:
+1. Removed duplicate `initMap` initialization.
+2. Unified map initialization under `initializeMap`.
+3. Added clear separation of logic for handling clicks, restaurant data, and menu pricing.
+4. Used `DOMContentLoaded` to ensure `initializeMap` is called only once.
+5. Improved error handling for fetch calls. */

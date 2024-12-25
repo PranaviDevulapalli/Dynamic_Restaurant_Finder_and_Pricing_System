@@ -1,0 +1,43 @@
+<!-- templates/menu_pricing/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Restaurant Finder</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'menu_pricing/css/styles.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Load app.js first -->
+    <script src="{% static 'menu_pricing/js/app.js' %}"></script>
+    <!-- Correct API key syntax -->
+    <script src="https://maps.googleapis.com/maps/api/js?key={{settings.GOOGLE_MAPS_API_KEY}}&callback=initMap" async defer loading="async"></script>
+
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+            
+                <h1>Restaurant Finder</h1>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="map-container">
+            <div id="map"></div>
+        </div>
+
+        <div id="info" class="info-panel"></div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Restaurant Finder. All rights reserved.</p>
+        </div>
+    </footer>
+
+    
+</body>
+</html>
