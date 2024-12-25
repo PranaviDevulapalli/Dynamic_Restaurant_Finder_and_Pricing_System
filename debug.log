@@ -6590,3 +6590,9 @@ DEBUG 2024-12-25 08:14:26,085 connectionpool Starting new HTTPS connection (1): 
 DEBUG 2024-12-25 08:14:26,217 connectionpool https://maps.googleapis.com:443 "GET /maps/api/place/nearbysearch/json?location=16.496171876786516%2C80.70281982421875&radius=50&key= HTTP/1.1" 200 265
 DEBUG 2024-12-25 08:14:26,221 connectionpool Starting new HTTPS connection (1): maps.googleapis.com:443
 DEBUG 2024-12-25 08:14:26,488 connectionpool https://maps.googleapis.com:443 "GET /maps/api/place/nearbysearch/json?location=16.496171876786516%2C80.70281982421875&radius=5000&type=restaurant&key= HTTP/1.1" 200 265
+INFO 2024-12-25 08:33:08,398 autoreload C:\Users\DELL\restaurant_pricing\.venv\Lib\site-packages\django\conf\urls\__init__.py changed, reloading.
+INFO 2024-12-25 08:33:08,398 autoreload C:\Users\DELL\restaurant_pricing\.venv\Lib\site-packages\django\contrib\admin\actions.py changed, reloading.
+INFO 2024-12-25 08:33:08,404 autoreload C:\Users\DELL\restaurant_pricing\.venv\Lib\site-packages\django\contrib\admin\options.py changed, reloading.
+INFO 2024-12-25 08:33:08,803 autoreload C:\Users\DELL\restaurant_pricing\.venv\Lib\site-packages\django\contrib\admin\migrations\__init__.py changed, reloading.
+INFO 2024-12-25 08:33:08,805 autoreload C:\Users\DELL\restaurant_pricing\.venv\Lib\site-packages\django\contrib\admin\migrations\0001_initial.py changed, reloading.
+INFO 2024-12-25 08:33:08,812 autoreload C:\Users\DELL\restaurant_pricing\.venv\Lib\site-packages\django\contrib\auth\backends.py changed, reloading.
